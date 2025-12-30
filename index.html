@@ -3,31 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マスクフェチ・ログ | FANZA厳選カタログ</title>
+    <title>マスクフェチ・ログ | 清潔感あふれるマスク作品カタログ</title>
     <style>
-        body { background: #0b0f19; color: #f8fafc; font-family: sans-serif; margin: 0; text-align: center; }
-        .age-warning { background: #ff0000; color: white; padding: 10px; font-weight: bold; position: sticky; top: 0; }
-        header { padding: 60px 20px; background: linear-gradient(#1e293b, #0b0f19); }
-        h1 { color: #f43f5e; font-size: 2.5rem; margin: 0; }
-        .card { background: #161e2d; max-width: 400px; margin: 20px auto; padding: 20px; border-radius: 15px; border: 1px solid #334155; }
-        .buy-btn { display: inline-block; background: #f43f5e; color: white; padding: 10px 20px; text-decoration: none; border-radius: 8px; font-weight: bold; margin-top: 10px; }
-        .ad-notice { font-size: 0.7rem; color: #64748b; margin-top: 20px; }
+        /* 優しい色使いの設定 */
+        :root {
+            --primary: #00a8e8; /* 爽やかな空色 */
+            --bg: #f0f9ff;      /* 非常に薄い水色 */
+            --card-bg: #ffffff;
+            --text: #334155;
+            --accent: #ff8fb1;  /* 優しいピンク */
+        }
+
+        body { 
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            background-color: var(--bg); 
+            color: var(--text); 
+            margin: 0; 
+            line-height: 1.6;
+        }
+
+        /* 年齢確認モーダル */
+        #age-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 10000; text-align: center; padding: 20px;
+        }
+        .gate-box {
+            max-width: 400px; padding: 40px; background: white;
+            border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .btn { 
+            padding: 12px 30px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
+        }
+        .btn-yes { background: var(--primary); color: white; }
+        .btn-no { background: #e2e8f0; color: #64748b; }
+
+        header { padding: 40px 20px; text-align: center; background: white; border-bottom: 3px solid var(--primary); }
+        h1 { color: var(--primary); margin: 0; font-size: 1.8rem; }
+        .sub { font-size: 0.9rem; color: #64748b; margin-top: 5px; }
+
+        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
+        .card { 
+            background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;
+        }
+        .buy-btn { 
+            display: block; background: var(--primary); color: white; text-align: center; 
+            padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; margin-top: 15px;
+        }
+        footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #94a3b8; }
     </style>
 </head>
 <body>
-    <div class="age-warning">【18禁】18歳未満の方の閲覧は固くお断りいたします。</div>
+
+    <div id="age-gate">
+        <div class="gate-box">
+            <h2 style="color:var(--primary)">年齢確認</h2>
+            <p>本サイトはアダルトコンテンツを含みます。<br>あなたは18歳以上ですか？</p>
+            <div class="btn-group">
+                <button class="btn btn-yes" onclick="enterSite()">はい（入室）</button>
+                <button class="btn btn-no" onclick="backAway()">いいえ</button>
+            </div>
+        </div>
+    </div>
+
     <header>
         <h1>マスクフェチ・ログ</h1>
-        <p>FANZA厳選！マスク美人作品カタログ</p>
+        <div class="sub">FANZA厳選！マスク美人作品カタログ</div>
     </header>
-    <main>
+
+    <main class="container">
         <div class="card">
-            <p>【サンプル作品】</p>
-            <h3>マスク美人の誘惑</h3>
-            <p>価格：1,980円〜</p>
-            <a href="#" class="buy-btn">作品詳細を見る（準備中）</a>
+            <div style="color:var(--primary); font-weight:bold; margin-bottom:10px;">New Arrival</div>
+            <h3 style="margin:0;">【サンプル】マスク美人の休日</h3>
+            <p style="font-size:0.9rem; color:#64748b;">準備中ですが、ここに作品が並びます。</p>
+            <a href="#" class="buy-btn">作品詳細をチェック</a>
         </div>
-        <p class="ad-notice">※本ページはプロモーションが含まれています</p>
+        <p style="text-align:center; font-size:0.7rem; color:#94a3b8;">※本ページはプロモーションが含まれています</p>
     </main>
+
+    <footer>
+        &copy; 2025 マスクフェチ・ログ<br>
+        18歳未満の方の閲覧は固くお断りいたします。
+    </footer>
+
+    <script>
+        // 「いいえ」を押した時にGoogleへ飛ばしてブラウザバックさせる
+        function backAway() {
+            window.location.href = "https://www.google.com";
+        }
+
+        // 「はい」を押した時にモーダルを消す
+        function enterSite() {
+            document.getElementById('age-gate').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
