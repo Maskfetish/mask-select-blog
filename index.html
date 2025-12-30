@@ -3,196 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マスクフェチの聖典 | 究極のマスク美人作品カタログ・ブログ</title>
+    <title>マスクフェチの聖典 | 究極のマスク美学を追求するブログ</title>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #0ea5e9; /* 清潔感のある空色 */
-            --primary-hover: #0284c7;
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-sub: #64748b;
-            --accent: #f472b6; /* 優しいピンク */
-        }
-
-        body {
-            font-family: 'Noto Sans JP', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
-            margin: 0;
-            line-height: 1.8;
-        }
-
-        /* --- 年齢確認モーダル --- */
-        #age-gate {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            display: flex; align-items: center; justify-content: center;
-            z-index: 99999;
-        }
-        .gate-content {
-            background: #fff; padding: 40px; border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
-            text-align: center; max-width: 450px; width: 90%;
-            border: 1px solid #e2e8f0;
-        }
-
-        /* --- ヘッダー --- */
-        header {
-            background: #fff;
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 4px solid var(--primary);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .logo { font-size: 2.5rem; font-weight: 700; color: var(--primary); letter-spacing: -1px; margin-bottom: 10px; }
-        .tagline { color: var(--text-sub); font-size: 1rem; }
-
-        /* --- レイアウト --- */
-        .wrapper {
-            max-width: 1200px;
-            margin: 40px auto;
-            display: grid;
-            grid-template-columns: 1fr 320px;
-            gap: 30px;
-            padding: 0 20px;
-        }
-
-        /* --- メインコンテンツ --- */
-        .post-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            overflow: hidden;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-            border: 1px solid #e2e8f0;
-        }
-        .post-card:hover { transform: translateY(-5px); }
-        .post-img { width: 100%; height: 250px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: var(--text-sub); }
-        .post-body { padding: 25px; }
-        .post-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px; display: flex; gap: 15px; }
-        .post-title { font-size: 1.4rem; margin: 0 0 15px 0; color: var(--text-main); }
-        .post-desc { color: var(--text-sub); margin-bottom: 20px; }
-
-        .btn-main {
-            display: inline-block;
-            background: var(--primary);
-            color: #fff;
-            padding: 12px 24px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 700;
-            transition: 0.2s;
-        }
-        .btn-main:hover { background: var(--primary-hover); transform: scale(1.02); }
-
-        /* --- サイドバー --- */
-        .sidebar-item {
-            background: #fff;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 25px;
-            border: 1px solid #e2e8f0;
-        }
-        .sidebar-title { font-weight: 700; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 10px; }
-        .search-input {
-            width: 100%; padding: 12px; border: 2px solid #f1f5f9; border-radius: 10px; box-sizing: border-box; outline: none; transition: 0.2s;
-        }
-        .search-input:focus { border-color: var(--primary); }
-
-        /* --- フッター --- */
-        footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 60px 20px; text-align: center; margin-top: 60px; }
-        .ad-banner { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 20px; }
-
-        @media (max-width: 900px) {
-            .wrapper { grid-template-columns: 1fr; }
-            .logo { font-size: 1.8rem; }
-        }
+        :root { --primary: #0ea5e9; --bg: #f8fafc; --white: #ffffff; --text: #1e293b; --text-sub: #64748b; }
+        body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); color: var(--text); margin: 0; line-height: 1.8; }
+        #age-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); display: flex; align-items: center; justify-content: center; z-index: 100000; }
+        .gate-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 400px; border: 1px solid #e2e8f0; }
+        header { background: var(--white); padding: 50px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        .logo { font-size: 2.5rem; font-weight: 700; color: var(--primary); margin: 0; }
+        .wrapper { max-width: 1000px; margin: 40px auto; display: grid; grid-template-columns: 1fr 300px; gap: 30px; padding: 0 20px; }
+        .card { background: var(--white); border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .sidebar-item { background: var(--white); padding: 20px; border-radius: 16px; margin-bottom: 20px; border: 1px solid #e2e8f0; }
+        .search-input { width: 100%; padding: 10px; border: 1px solid #e2e8f0; border-radius: 8px; box-sizing: border-box; }
+        footer { text-align: center; padding: 60px 20px; background: white; border-top: 1px solid #e2e8f0; color: var(--text-sub); font-size: 0.8rem; }
+        .btn { display: inline-block; background: var(--primary); color: white; padding: 12px 24px; border-radius: 10px; text-decoration: none; font-weight: bold; }
+        @media (max-width: 800px) { .wrapper { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
-
     <div id="age-gate">
-        <div class="gate-content">
-            <i class="fas fa-id-card fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
-            <h2>年齢認証</h2>
-            <p>本サイトにはアダルトな表現が含まれています。<br>あなたは<strong>18歳以上</strong>ですか？</p>
-            <div style="display:flex; gap:15px; margin-top:30px;">
-                <button onclick="enterSite()" class="btn-main" style="flex:1; border:none; cursor:pointer;">はい、18歳以上です</button>
-                <button onclick="location.href='https://www.google.com'" style="flex:1; border:none; background:#e2e8f0; color:#64748b; border-radius:12px; cursor:pointer;">いいえ、戻ります</button>
+        <div class="gate-box">
+            <h2 style="color:var(--primary);">年齢確認</h2>
+            <p>本サイトはアダルトコンテンツを含みます。<br>あなたは<strong>18歳以上</strong>ですか？</p>
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button onclick="document.getElementById('age-gate').style.display='none'" class="btn" style="flex:1; border:none; cursor:pointer;">はい（入室）</button>
+                <button onclick="location.href='https://www.google.com'" style="flex:1; border:none; background:#e2e8f0; color:#64748b; border-radius:10px; cursor:pointer;">いいえ</button>
             </div>
         </div>
     </div>
 
     <header>
-        <div class="logo"><i class="fas fa-book-open"></i> マスクフェチの聖典</div>
-        <div class="tagline">〜 究極のマスク美人を求めて。厳選されたFANZA作品カタログ 〜</div>
+        <h1 class="logo"><i class="fas fa-mask"></i> マスクフェチの聖典</h1>
+        <p style="color:var(--text-sub);">〜 隠された美しさに、真実の価値を見出す場所 〜</p>
     </header>
 
     <div class="wrapper">
-        <main id="main-content">
-            <article class="post-card">
-                <div class="post-img"><i class="fas fa-image fa-3x"></i></div>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <span><i class="far fa-calendar-alt"></i> 2025.12.30</span>
-                        <span><i class="fas fa-tag"></i> 不織布マスク</span>
-                    </div>
-                    <h2 class="post-title">【聖典推薦】清楚系マスク美人のギャップに溺れる一作</h2>
-                    <p class="post-desc">現在、FANZA APIから最新の作品データを取得する準備をしています。ここに作品の魅力が詳しく表示されます。</p>
-                    <a href="#" class="btn-main">作品の詳細を確認する</a>
-                </div>
+        <main>
+            <article class="card">
+                <h2 style="color:var(--primary);"><i class="fas fa-bullhorn"></i> 【創刊宣言】なぜ今、マスクという「聖域」を語るのか</h2>
+                <p>世界が一変した数年前、私たちは図らずも「全員がマスクを着用する」という特異な時代を経験しました。しかし、私にとってそれは単なる衛生上の習慣ではありませんでした。それは、**「隠されることで、美しさが加速する」**という新たなフェチズムの地平が開かれた瞬間だったのです。</p>
+                <p>マスクは顔の半分を覆い隠します。しかし、隠された鼻筋や口元を想像する「余白」こそが、人間の想像力を最も刺激する芸術ではないでしょうか。特に、不織布の質感と肌のコントラスト、小顔効果が生み出す絶妙なバランス…これらは現代が生んだ究極の造形美です。</p>
+                <p>このサイトは、溢れかえる作品群の中から、私の審美眼に適った「真にマスクを美しく表現している作品」だけをアーカイブし、その魅力を言語化するために設立しました。ここは、マスクを愛する全ての同志のための「聖域」です。</p>
+            </article>
+            <article class="card">
+                <h2 style="color:var(--primary);"><i class="fas fa-microscope"></i> 当サイトが追求する「3つのこだわり」</h2>
+                <p>「マスクフェチの聖典」では、以下の3点を基準に作品を厳選・紹介していきます。</p>
+                <ul>
+                    <li><strong>造形美の追求：</strong> マスクの紐が食い込む頬のライン、清潔感溢れる白マスクの反射。</li>
+                    <li><strong>ギャップの美学：</strong> マスク姿の知的な印象と、その奥に秘められた官能性の対比。</li>
+                    <li><strong>情報の質：</strong> 単なる紹介ではなく、フェチとしての「こだわりポイント」を熱く解説。</li>
+                </ul>
+                <p>これから、DMM/FANZAの広大な海から、宝石のような一作を順次ピックアップしていきます。期待してお待ちください。</p>
             </article>
         </main>
-
         <aside>
             <div class="sidebar-item">
-                <div class="sidebar-title">作品検索</div>
-                <input type="text" class="search-input" id="searchBar" placeholder="キーワードを入力..." onkeyup="filterPosts()">
+                <h4 style="margin-top:0;">サイト内検索</h4>
+                <input type="text" id="searchBar" class="search-input" placeholder="キーワードで探す..." onkeyup="filterPosts()">
             </div>
             <div class="sidebar-item">
-                <div class="sidebar-title">カテゴリー</div>
-                <div style="display:flex; flex-wrap:wrap; gap:8px;">
-                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#白マスク</span>
-                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#黒マスク</span>
-                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#小顔効果</span>
-                </div>
+                <h4>Powered by DMM</h4>
+                <p style="font-size:0.8rem;">当サイトはDMMアフィリエイトプログラムの規約に基づき、適切なクレジット表示を行っています。</p>
             </div>
         </aside>
     </div>
 
     <footer>
-        <div class="ad-banner">※本ページはDMMアフィリエイトプログラムによるプロモーションが含まれています。</div>
-        <p>&copy; 2025 マスクフェチの聖典 - All Rights Reserved.</p>
-        <p style="font-size:0.75rem; max-width:700px; margin:20px auto; color:var(--text-sub);">
-            当サイトは18歳以上の成人を対象とした情報を掲載しています。18歳未満の方の閲覧は固く禁止いたします。
-            掲載されている情報の正確性については細心の注意を払っておりますが、最新情報は必ずFANZA公式サイトにてご確認ください。
-        </p>
+        <p>※本ページはプロモーションが含まれています。</p>
+        <p>&copy; 2025 マスクフェチの聖典<br>18歳未満の方の閲覧は固くお断りいたします。</p>
     </footer>
 
     <script>
-        function enterSite() {
-            document.getElementById('age-gate').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('age-gate').style.display = 'none';
-            }, 300);
-        }
-
-        // 検索フィルタリング機能（プロっぽくリアルタイムに動くにょ）
         function filterPosts() {
             let input = document.getElementById('searchBar').value.toLowerCase();
-            let posts = document.getElementsByClassName('post-card');
-            
+            let posts = document.getElementsByClassName('card');
             for (let i = 0; i < posts.length; i++) {
-                let title = posts[i].getElementsByClassName('post-title')[0].innerText.toLowerCase();
-                if (title.includes(input)) {
-                    posts[i].style.display = "";
-                } else {
-                    posts[i].style.display = "none";
-                }
+                let title = posts[i].getElementsByTagName('h2')[0].innerText.toLowerCase();
+                posts[i].style.display = title.includes(input) ? "" : "none";
             }
         }
     </script>
