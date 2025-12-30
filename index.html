@@ -3,101 +3,197 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マスクフェチ・ログ | 清潔感あふれるマスク作品カタログ</title>
+    <title>マスクフェチの聖典 | 究極のマスク美人作品カタログ・ブログ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        /* 優しい色使いの設定 */
         :root {
-            --primary: #00a8e8; /* 爽やかな空色 */
-            --bg: #f0f9ff;      /* 非常に薄い水色 */
+            --primary: #0ea5e9; /* 清潔感のある空色 */
+            --primary-hover: #0284c7;
+            --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text: #334155;
-            --accent: #ff8fb1;  /* 優しいピンク */
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --accent: #f472b6; /* 優しいピンク */
         }
 
-        body { 
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: var(--bg); 
-            color: var(--text); 
-            margin: 0; 
-            line-height: 1.6;
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.8;
         }
 
-        /* 年齢確認モーダル */
+        /* --- 年齢確認モーダル --- */
         #age-gate {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(255, 255, 255, 0.98);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 10000; text-align: center; padding: 20px;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 99999;
         }
-        .gate-box {
-            max-width: 400px; padding: 40px; background: white;
-            border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        .gate-content {
+            background: #fff; padding: 40px; border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            text-align: center; max-width: 450px; width: 90%;
+            border: 1px solid #e2e8f0;
         }
-        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-        .btn { 
-            padding: 12px 30px; border: none; border-radius: 50px; cursor: pointer; font-weight: bold; font-size: 1rem;
-        }
-        .btn-yes { background: var(--primary); color: white; }
-        .btn-no { background: #e2e8f0; color: #64748b; }
 
-        header { padding: 40px 20px; text-align: center; background: white; border-bottom: 3px solid var(--primary); }
-        h1 { color: var(--primary); margin: 0; font-size: 1.8rem; }
-        .sub { font-size: 0.9rem; color: #64748b; margin-top: 5px; }
+        /* --- ヘッダー --- */
+        header {
+            background: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 2.5rem; font-weight: 700; color: var(--primary); letter-spacing: -1px; margin-bottom: 10px; }
+        .tagline { color: var(--text-sub); font-size: 1rem; }
 
-        .container { max-width: 600px; margin: 20px auto; padding: 0 15px; }
-        .card { 
-            background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;
+        /* --- レイアウト --- */
+        .wrapper {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 30px;
+            padding: 0 20px;
         }
-        .buy-btn { 
-            display: block; background: var(--primary); color: white; text-align: center; 
-            padding: 12px; text-decoration: none; border-radius: 10px; font-weight: bold; margin-top: 15px;
+
+        /* --- メインコンテンツ --- */
+        .post-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border: 1px solid #e2e8f0;
         }
-        footer { text-align: center; padding: 40px; font-size: 0.8rem; color: #94a3b8; }
+        .post-card:hover { transform: translateY(-5px); }
+        .post-img { width: 100%; height: 250px; background: #e2e8f0; display: flex; align-items: center; justify-content: center; color: var(--text-sub); }
+        .post-body { padding: 25px; }
+        .post-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 10px; display: flex; gap: 15px; }
+        .post-title { font-size: 1.4rem; margin: 0 0 15px 0; color: var(--text-main); }
+        .post-desc { color: var(--text-sub); margin-bottom: 20px; }
+
+        .btn-main {
+            display: inline-block;
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+        .btn-main:hover { background: var(--primary-hover); transform: scale(1.02); }
+
+        /* --- サイドバー --- */
+        .sidebar-item {
+            background: #fff;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+        }
+        .sidebar-title { font-weight: 700; margin-bottom: 15px; border-left: 4px solid var(--primary); padding-left: 10px; }
+        .search-input {
+            width: 100%; padding: 12px; border: 2px solid #f1f5f9; border-radius: 10px; box-sizing: border-box; outline: none; transition: 0.2s;
+        }
+        .search-input:focus { border-color: var(--primary); }
+
+        /* --- フッター --- */
+        footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 60px 20px; text-align: center; margin-top: 60px; }
+        .ad-banner { font-size: 0.75rem; color: var(--text-sub); margin-bottom: 20px; }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .logo { font-size: 1.8rem; }
+        }
     </style>
 </head>
 <body>
 
     <div id="age-gate">
-        <div class="gate-box">
-            <h2 style="color:var(--primary)">年齢確認</h2>
-            <p>本サイトはアダルトコンテンツを含みます。<br>あなたは18歳以上ですか？</p>
-            <div class="btn-group">
-                <button class="btn btn-yes" onclick="enterSite()">はい（入室）</button>
-                <button class="btn btn-no" onclick="backAway()">いいえ</button>
+        <div class="gate-content">
+            <i class="fas fa-id-card fa-3x" style="color:var(--primary); margin-bottom:20px;"></i>
+            <h2>年齢認証</h2>
+            <p>本サイトにはアダルトな表現が含まれています。<br>あなたは<strong>18歳以上</strong>ですか？</p>
+            <div style="display:flex; gap:15px; margin-top:30px;">
+                <button onclick="enterSite()" class="btn-main" style="flex:1; border:none; cursor:pointer;">はい、18歳以上です</button>
+                <button onclick="location.href='https://www.google.com'" style="flex:1; border:none; background:#e2e8f0; color:#64748b; border-radius:12px; cursor:pointer;">いいえ、戻ります</button>
             </div>
         </div>
     </div>
 
     <header>
-        <h1>マスクフェチ・ログ</h1>
-        <div class="sub">FANZA厳選！マスク美人作品カタログ</div>
+        <div class="logo"><i class="fas fa-book-open"></i> マスクフェチの聖典</div>
+        <div class="tagline">〜 究極のマスク美人を求めて。厳選されたFANZA作品カタログ 〜</div>
     </header>
 
-    <main class="container">
-        <div class="card">
-            <div style="color:var(--primary); font-weight:bold; margin-bottom:10px;">New Arrival</div>
-            <h3 style="margin:0;">【サンプル】マスク美人の休日</h3>
-            <p style="font-size:0.9rem; color:#64748b;">準備中ですが、ここに作品が並びます。</p>
-            <a href="#" class="buy-btn">作品詳細をチェック</a>
-        </div>
-        <p style="text-align:center; font-size:0.7rem; color:#94a3b8;">※本ページはプロモーションが含まれています</p>
-    </main>
+    <div class="wrapper">
+        <main id="main-content">
+            <article class="post-card">
+                <div class="post-img"><i class="fas fa-image fa-3x"></i></div>
+                <div class="post-body">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> 2025.12.30</span>
+                        <span><i class="fas fa-tag"></i> 不織布マスク</span>
+                    </div>
+                    <h2 class="post-title">【聖典推薦】清楚系マスク美人のギャップに溺れる一作</h2>
+                    <p class="post-desc">現在、FANZA APIから最新の作品データを取得する準備をしています。ここに作品の魅力が詳しく表示されます。</p>
+                    <a href="#" class="btn-main">作品の詳細を確認する</a>
+                </div>
+            </article>
+        </main>
+
+        <aside>
+            <div class="sidebar-item">
+                <div class="sidebar-title">作品検索</div>
+                <input type="text" class="search-input" id="searchBar" placeholder="キーワードを入力..." onkeyup="filterPosts()">
+            </div>
+            <div class="sidebar-item">
+                <div class="sidebar-title">カテゴリー</div>
+                <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#白マスク</span>
+                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#黒マスク</span>
+                    <span style="background:#f1f5f9; padding:5px 12px; border-radius:20px; font-size:0.85rem; cursor:pointer;">#小顔効果</span>
+                </div>
+            </div>
+        </aside>
+    </div>
 
     <footer>
-        &copy; 2025 マスクフェチ・ログ<br>
-        18歳未満の方の閲覧は固くお断りいたします。
+        <div class="ad-banner">※本ページはDMMアフィリエイトプログラムによるプロモーションが含まれています。</div>
+        <p>&copy; 2025 マスクフェチの聖典 - All Rights Reserved.</p>
+        <p style="font-size:0.75rem; max-width:700px; margin:20px auto; color:var(--text-sub);">
+            当サイトは18歳以上の成人を対象とした情報を掲載しています。18歳未満の方の閲覧は固く禁止いたします。
+            掲載されている情報の正確性については細心の注意を払っておりますが、最新情報は必ずFANZA公式サイトにてご確認ください。
+        </p>
     </footer>
 
     <script>
-        // 「いいえ」を押した時にGoogleへ飛ばしてブラウザバックさせる
-        function backAway() {
-            window.location.href = "https://www.google.com";
+        function enterSite() {
+            document.getElementById('age-gate').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('age-gate').style.display = 'none';
+            }, 300);
         }
 
-        // 「はい」を押した時にモーダルを消す
-        function enterSite() {
-            document.getElementById('age-gate').style.display = 'none';
+        // 検索フィルタリング機能（プロっぽくリアルタイムに動くにょ）
+        function filterPosts() {
+            let input = document.getElementById('searchBar').value.toLowerCase();
+            let posts = document.getElementsByClassName('post-card');
+            
+            for (let i = 0; i < posts.length; i++) {
+                let title = posts[i].getElementsByClassName('post-title')[0].innerText.toLowerCase();
+                if (title.includes(input)) {
+                    posts[i].style.display = "";
+                } else {
+                    posts[i].style.display = "none";
+                }
+            }
         }
     </script>
 </body>
