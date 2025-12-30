@@ -185,8 +185,8 @@
     </footer>
 
     <script>
-        // 🚀 DATABASE CONFIG
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjCU9m5CbBEs9oaj-VpcUQTh_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?gid=0&single=true&output=csv';
+    // 🚀 DATABASE CONFIG
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjcU9m5CbBEs9oaj-VpcUQth_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?output=csv';
         let database = [];
 
         // 🔓 UNLOCK SYSTEM
@@ -204,18 +204,20 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 📊 DATA ENGINE
+        // 📊 DATA ENGINE (改行・長文完全対応版)
         async function init() {
             try {
                 const response = await fetch(CSV_URL);
                 const csvData = await response.text();
-                const lines = csvData.split(/\r?\n/).slice(1);
+                
+                // CSVをパース（改行が含まれるセルも正しく分割）
+                const rows = parseCSV(csvData);
                 const listEl = document.getElementById('post-list');
                 listEl.innerHTML = '';
 
-                lines.forEach((line, index) => {
-                    const [date, cat, title, desc, url] = line.split(',');
-                    if(!title) return;
+                rows.slice(1).forEach((cols, index) => {
+                    if (cols.length < 3) return;
+                    const [date, cat, title, desc, url] = cols;
 
                     const postObj = { date, cat, title, desc, url };
                     database[index] = postObj;
@@ -225,17 +227,31 @@
                             <span class="post-label">${cat}</span>
                             <div style="font-size:0.85rem; color:var(--text-sub); margin-bottom:8px;">${date}</div>
                             <h2 class="post-title">${title}</h2>
-                            <p class="post-preview">${desc}</p>
+                            <p class="post-preview">${desc.substring(0, 100)}...</p>
                             <div style="color:var(--primary); font-weight:700; margin-top:15px;">
-                                続きを読む <i class="fas fa-chevron-right" style="font-size:0.8rem;"></i>
+                                続きを読む <i class="fas fa-chevron-right"></i>
                             </div>
                         </article>
                     `;
                 });
             } catch (err) {
                 console.error(err);
-                document.getElementById('post-list').innerHTML = "聖典の読み込みに失敗。CSVの公開設定を確認してください。";
             }
+        }
+
+        // 📝 CSVパーサー（複雑な改行やクォートに対応）
+        function parseCSV(text) {
+            const re = /(?!\s*$)\s*(?:'([^']*)'|"([^"]*)"|([^, \t\n\r]*))\s*(?:,|$)/g;
+            const rows = [];
+            let row = [];
+            text.replace(re, (m, m1, m2, m3) => {
+                if (m1 !== undefined) row.push(m1);
+                else if (m2 !== undefined) row.push(m2);
+                else row.push(m3);
+                if (m.indexOf(',') === -1) { rows.push(row); row = []; }
+                return '';
+            });
+            return rows;
         }
 
         // 📖 DETAIL RENDERER
@@ -246,7 +262,7 @@
                 <div class="post-label">${p.cat}</div>
                 <div style="color:var(--text-sub); font-weight:500;">公開日: ${p.date}</div>
                 <h1 style="font-size:2.8rem; line-height:1.2; margin:20px 0; color:var(--text-main);">${p.title}</h1>
-                <div class="full-text">${p.desc}</div>
+                <div class="full-text" style="white-space: pre-wrap; word-break: break-all;">${p.desc}</div>
                 <div style="margin-top:60px; padding-top:40px; border-top:2px dashed #e2e8f0;">
                     <p style="text-align:center; font-weight:700; color:var(--text-sub); margin-bottom:20px;">＼ 究極のマスク造形を公式サイトで拝む ／</p>
                     <a href="${p.url}" target="_blank" class="cta-button">
@@ -257,18 +273,4 @@
             navTo('detail');
         }
 
-        // 🔍 SEARCH SYSTEM
-        function filterPosts() {
-            const q = document.getElementById('search-input').value.toLowerCase();
-            const cards = document.getElementsByClassName('post-card');
-            Array.from(cards).forEach(c => {
-                const text = c.innerText.toLowerCase();
-                c.style.display = text.includes(q) ? 'block' : 'none';
-            });
-        }
-
         init();
-    </script>
-</body>
-</html>
-
