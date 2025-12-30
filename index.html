@@ -3,82 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マスクフェチの聖典 | 究極のマスク美学</title>
+    <title>マスクフェチの聖典 | 究極のマスク美学を追求するブログ</title>
+    <meta name="description" content="不織布マスク、黒マスク、小顔効果。隠された美しさに真実の価値を見出す、マスクフェチのための専門アーカイブ。">
+    
+    <meta name="google-site-verification" content="GSCのコードをここに入れる" />
+
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        :root { --primary: #0ea5e9; --bg: #f8fafc; --white: #ffffff; --text: #1e293b; --text-sub: #64748b; }
-        body { font-family: 'Noto Sans JP', sans-serif; background: var(--bg); margin: 0; line-height: 1.8; }
-        header { background: var(--white); padding: 40px; text-align: center; border-bottom: 4px solid var(--primary); }
-        .wrapper { max-width: 1000px; margin: 40px auto; display: grid; grid-template-columns: 1fr 300px; gap: 30px; padding: 0 20px; }
-        .card { background: white; border-radius: 16px; padding: 30px; margin-bottom: 20px; border: 1px solid #e2e8f0; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .btn { display: inline-block; background: var(--primary); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; }
-        #age-gate { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.98); display: flex; align-items: center; justify-content: center; z-index: 100000; }
-        .gate-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; max-width: 400px; border: 1px solid #e2e8f0; }
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --bg: #f8fafc;
+            --white: #ffffff;
+            --text-main: #1e293b;
+            --text-sub: #64748b;
+            --accent: #f43f5e;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        /* 🔞 18禁ガード（アニメーション付き） */
+        #age-gate {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100000;
+            transition: opacity 0.5s;
+        }
+        .gate-box {
+            background: var(--white);
+            padding: 50px 30px;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            border: 2px solid #f1f5f9;
+        }
+
+        header {
+            background: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 5px solid var(--primary);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        .logo { font-size: 3rem; font-weight: 700; color: var(--primary); margin: 0; letter-spacing: -1px; }
+        .tagline { color: var(--text-sub); margin-top: 10px; font-weight: 400; }
+
+        .wrapper {
+            max-width: 1100px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 40px;
+            padding: 0 20px;
+        }
+
+        /* 📇 記事カード */
+        .post-card {
+            background: var(--white);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+        .post-meta { font-size: 0.85rem; color: var(--text-sub); margin-bottom: 12px; display: flex; gap: 15px; }
+        .post-title { font-size: 1.6rem; margin: 0 0 15px 0; color: var(--text-main); line-height: 1.4; }
+        .post-excerpt { 
+            color: var(--text-sub); 
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; 
+            overflow: hidden; margin-bottom: 20px; 
+        }
+        .read-more { color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 5px; }
+
+        /* 📖 記事詳細モーダル */
+        #post-detail {
+            position: fixed;
+            inset: 0;
+            background: var(--white);
+            z-index: 10000;
+            display: none;
+            overflow-y: auto;
+            padding: 60px 20px;
+        }
+        .detail-container { max-width: 800px; margin: 0 auto; }
+        .back-btn { 
+            background: var(--bg); border: none; padding: 10px 20px; border-radius: 50px;
+            cursor: pointer; margin-bottom: 30px; font-weight: bold; color: var(--text-sub);
+            transition: 0.2s;
+        }
+        .back-btn:hover { background: #e2e8f0; color: var(--text-main); }
+        .detail-body { font-size: 1.15rem; white-space: pre-wrap; color: #334155; }
+
+        /* 📱 サイドバー */
+        .sidebar-item {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #e2e8f0;
+        }
+        .x-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: #000; color: white; padding: 12px; border-radius: 12px;
+            text-decoration: none; font-weight: bold; transition: 0.3s;
+        }
+        .x-btn:hover { background: #333; }
+
+        .cta-btn {
+            display: block; width: 100%; background: var(--primary); color: white;
+            padding: 18px; border-radius: 15px; text-decoration: none; text-align: center;
+            font-weight: bold; font-size: 1.2rem; margin-top: 40px; box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.3);
+        }
+        .cta-btn:hover { background: var(--primary-dark); }
+
+        footer { text-align: center; padding: 80px 20px; color: var(--text-sub); font-size: 0.85rem; }
+
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .logo { font-size: 2.2rem; }
+        }
     </style>
 </head>
 <body>
 
     <div id="age-gate">
         <div class="gate-box">
-            <h2 style="color:var(--primary);">年齢確認</h2>
-            <p>あなたは<strong>18歳以上</strong>ですか？</p>
-            <div style="display:flex; gap:10px; margin-top:20px;">
-                <button onclick="document.getElementById('age-gate').style.display='none'" class="btn" style="flex:1; border:none; cursor:pointer;">はい</button>
-                <button onclick="location.href='https://www.google.com'" style="flex:1; border:none; background:#e2e8f0; color:#64748b; border-radius:10px; cursor:pointer;">いいえ</button>
+            <i class="fas fa-exclamation-triangle fa-3x" style="color:var(--accent); margin-bottom:20px;"></i>
+            <h2>ADULT ONLY</h2>
+            <p>このサイトは成人向けコンテンツを含みます。<br>あなたは<strong>18歳以上</strong>ですか？</p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-top:30px;">
+                <button onclick="enterSite()" class="btn" style="background:var(--primary); color:white; border:none; padding:15px; border-radius:12px; font-weight:bold; cursor:pointer;">はい（入室）</button>
+                <button onclick="location.href='https://www.google.com'" style="background:#f1f5f9; color:var(--text-sub); border:none; padding:15px; border-radius:12px; cursor:pointer;">いいえ</button>
             </div>
         </div>
     </div>
 
+    <div id="post-detail">
+        <div class="detail-container">
+            <button class="back-btn" onclick="closeDetail()"><i class="fas fa-chevron-left"></i> 一覧に戻る</button>
+            <div id="detail-content"></div>
+        </div>
+    </div>
+
     <header>
-        <h1 style="color:var(--primary); margin:0;"><i class="fas fa-mask"></i> マスクフェチの聖典</h1>
+        <h1 class="logo"><i class="fas fa-mask"></i> マスクフェチの聖典</h1>
+        <p class="tagline">隠された美しさに、真実の価値を見出す専門アーカイブ</p>
     </header>
 
     <div class="wrapper">
         <main id="article-list">
-            <p>聖典を読み込み中だにょ...</p>
+            <div style="text-align:center; padding:50px;">
+                <i class="fas fa-spinner fa-spin fa-2x" style="color:var(--primary);"></i>
+                <p>聖典を読み込み中だにょ...</p>
+            </div>
         </main>
+
         <aside>
-            <div class="card">
-                <h4>Powered by DMM</h4>
-                <p style="font-size:0.8rem;">当サイトはDMMアフィリエイトプログラムの規約に基づき運営されています。</p>
+            <div class="sidebar-item">
+                <h4 style="margin:0 0 15px 0;">執筆者 / 運営</h4>
+                <a href="https://x.com/jvsnnm" target="_blank" class="x-btn">
+                    <i class="fab fa-x-twitter"></i> @jvsnnm をフォロー
+                </a>
+                <p style="font-size:0.75rem; color:var(--text-sub); margin-top:15px;">
+                    マスクが持つ究極の造形美を日々研究中。最新の更新情報はXでチェックしてにょ。
+                </p>
+            </div>
+
+            <div class="sidebar-item">
+                <h4 style="margin:0 0 10px 0;">検索</h4>
+                <input type="text" id="search" placeholder="キーワード..." style="width:100%; padding:10px; border:1px solid #e2e8f0; border-radius:10px;" onkeyup="searchPosts()">
+            </div>
+
+            <div class="sidebar-item" style="background:#f0f9ff; border-color:#bae6fd;">
+                <h4 style="margin:0 0 10px 0; color:var(--primary-dark);">About</h4>
+                <p style="font-size:0.8rem; margin:0;">当サイトはDMMアフィリエイトプログラム参加サイトです。規約を遵守し、厳選された作品のみを紹介しています。</p>
             </div>
         </aside>
     </div>
 
-    <script>
-        // 🚀 スプレッドシート（CSV）のURLをここに貼るにょ！
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjCU9m5CbBEs9oaj-VpcUQTh_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?output=csv';
+    <footer>
+        <p>※本ページはプロモーションが含まれています。</p>
+        <p>&copy; 2025 マスクフェチの聖典 - All Rights Reserved.</p>
+    </footer>
 
-        async function loadArticles() {
+    <script>
+        // 🚀 あなたのスプレッドシートCSV URL
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjcU9m5CbBEs9oaj-VpcUQth_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?output=csv';
+
+        let postsData = [];
+
+        function enterSite() {
+            const gate = document.getElementById('age-gate');
+            gate.style.opacity = '0';
+            setTimeout(() => gate.style.display = 'none', 500);
+        }
+
+        async function fetchPosts() {
             try {
-                const response = await fetch(CSV_URL);
-                const data = await response.text();
-                const rows = data.split(/\r?\n/).slice(1);
+                const res = await fetch(CSV_URL);
+                const text = await res.text();
+                const lines = text.split(/\r?\n/).slice(1);
                 const list = document.getElementById('article-list');
                 list.innerHTML = '';
 
-                rows.forEach(row => {
-                    // カンマで分割（簡易版）
-                    const columns = row.split(',');
-                    if(columns.length < 4) return;
-                    const [date, category, title, desc, url] = columns;
+                lines.forEach((line, i) => {
+                    const cols = line.split(',');
+                    if(cols.length < 4) return;
+                    const [date, cat, title, desc, url] = cols;
+                    postsData[i] = { date, cat, title, desc, url };
 
                     list.innerHTML += `
-                        <article class="card">
-                            <div style="font-size:0.8rem; color:var(--text-sub);">${date} | #${category}</div>
-                            <h2 style="color:var(--primary); margin:10px 0;">${title}</h2>
-                            <p>${desc}</p>
-                            <a href="${url}" target="_blank" class="btn">作品の詳細を見る</a>
+                        <article class="post-card" onclick="openDetail(${i})">
+                            <div class="post-meta">
+                                <span><i class="far fa-calendar-alt"></i> ${date}</span>
+                                <span><i class="fas fa-tag"></i> ${cat}</span>
+                            </div>
+                            <h2 class="post-title">${title}</h2>
+                            <p class="post-excerpt">${desc}</p>
+                            <div class="read-more">記事を詳しく読む <i class="fas fa-chevron-right"></i></div>
                         </article>
                     `;
                 });
             } catch (e) {
-                document.getElementById('article-list').innerHTML = "データの読み込みに失敗したにょ。CSVの公開設定を確認してにょ！";
+                document.getElementById('article-list').innerHTML = "読み込みに失敗したにょ。設定を確認してにょ。";
             }
         }
-        loadArticles();
+
+        function openDetail(i) {
+            const p = postsData[i];
+            const content = document.getElementById('detail-content');
+            content.innerHTML = `
+                <div class="post-meta"><span>${p.date}</span> | <span>#${p.cat}</span></div>
+                <h1 style="font-size:2.5rem; margin:10px 0;">${p.title}</h1>
+                <hr style="border:0; border-top:2px solid #f1f5f9; margin:40px 0;">
+                <div class="detail-body">${p.desc}</div>
+                <a href="${p.url}" target="_blank" class="cta-btn">
+                    <i class="fas fa-shopping-cart"></i> この作品を公式でチェック
+                </a>
+                <p style="text-align:center; color:var(--text-sub); font-size:0.8rem; margin-top:20px;">（FANZA/DMMの公式サイトへ移動します）</p>
+            `;
+            document.getElementById('post-detail').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        function closeDetail() {
+            document.getElementById('post-detail').style.display = 'none';
+        }
+
+        function searchPosts() {
+            const query = document.getElementById('search').value.toLowerCase();
+            const cards = document.getElementsByClassName('post-card');
+            Array.from(cards).forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        }
+
+        fetchPosts();
     </script>
 </body>
 </html>
