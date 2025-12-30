@@ -184,93 +184,117 @@
         <p>&copy; 2025 マスクフェチの聖典<br>Unauthorized copying and replication of the contents of this site are strictly prohibited.</p>
     </footer>
 
-    <script>
+   <script>
     // 🚀 DATABASE CONFIG
-        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjcU9m5CbBEs9oaj-VpcUQth_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?output=csv';
-        let database = [];
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7okjcU9m5CbBEs9oaj-VpcUQth_eyXhgsc4n_JK63a_4A-S4CkgIVusNiPCeWeldSxiUmuaP8dPkO/pub?output=csv';
+    let database = [];
 
-        // 🔓 UNLOCK SYSTEM
-        function unlock() {
-            const gate = document.getElementById('age-gate');
+    // 🔓 UNLOCK SYSTEM (確実に動くように修正)
+    window.unlock = function() {
+        const gate = document.getElementById('age-gate');
+        if (gate) {
             gate.style.transition = 'opacity 0.6s ease';
             gate.style.opacity = '0';
-            setTimeout(() => gate.style.display = 'none', 600);
+            setTimeout(() => { gate.style.display = 'none'; }, 600);
         }
+    };
 
-        // 🚀 NAVIGATION SYSTEM
-        function navTo(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
+    // 🚀 NAVIGATION SYSTEM
+    window.navTo = function(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        const targetPage = document.getElementById('page-' + pageId);
+        if (targetPage) {
+            targetPage.classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
+    };
 
-        // 📊 DATA ENGINE (改行・長文完全対応版)
-        async function init() {
-            try {
-                const response = await fetch(CSV_URL);
-                const csvData = await response.text();
+    // 📊 DATA ENGINE (全文・改行・特殊文字に完全対応)
+    async function init() {
+        try {
+            const response = await fetch(CSV_URL);
+            const csvData = await response.text();
+            
+            // CSVを1行ずつではなく、複雑な改行も読み込める形式でパース
+            const rows = parseCSV(csvData);
+            const listEl = document.getElementById('post-list');
+            if (!listEl) return;
+            listEl.innerHTML = '';
+
+            // 1行目はヘッダーなので2行目（index 1）から処理
+            for (let i = 1; i < rows.length; i++) {
+                const cols = rows[i];
+                if (cols.length < 3) continue;
+
+                const [date, cat, title, desc, url] = cols;
+                const postObj = { 
+                    date: date || '', 
+                    cat: cat || '未分類', 
+                    title: title || '無題', 
+                    desc: desc || '', 
+                    url: url || '#' 
+                };
                 
-                // CSVをパース（改行が含まれるセルも正しく分割）
-                const rows = parseCSV(csvData);
-                const listEl = document.getElementById('post-list');
-                listEl.innerHTML = '';
+                database.push(postObj);
+                const dbIndex = database.length - 1;
 
-                rows.slice(1).forEach((cols, index) => {
-                    if (cols.length < 3) return;
-                    const [date, cat, title, desc, url] = cols;
-
-                    const postObj = { date, cat, title, desc, url };
-                    database[index] = postObj;
-
-                    listEl.innerHTML += `
-                        <article class="post-card" onclick="renderDetail(${index})">
-                            <span class="post-label">${cat}</span>
-                            <div style="font-size:0.85rem; color:var(--text-sub); margin-bottom:8px;">${date}</div>
-                            <h2 class="post-title">${title}</h2>
-                            <p class="post-preview">${desc.substring(0, 100)}...</p>
-                            <div style="color:var(--primary); font-weight:700; margin-top:15px;">
-                                続きを読む <i class="fas fa-chevron-right"></i>
-                            </div>
-                        </article>
-                    `;
-                });
-            } catch (err) {
-                console.error(err);
+                listEl.innerHTML += `
+                    <article class="post-card" onclick="renderDetail(${dbIndex})">
+                        <span class="post-label">${postObj.cat}</span>
+                        <div style="font-size:0.85rem; color:var(--text-sub); margin-bottom:8px;">${postObj.date}</div>
+                        <h2 class="post-title">${postObj.title}</h2>
+                        <p class="post-preview">${postObj.desc.substring(0, 100)}...</p>
+                        <div style="color:var(--primary); font-weight:700; margin-top:15px;">
+                            続きを読む <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </article>
+                `;
             }
+        } catch (err) {
+            console.error("データ取得エラー:", err);
         }
+    }
 
-        // 📝 CSVパーサー（複雑な改行やクォートに対応）
-        function parseCSV(text) {
-            const re = /(?!\s*$)\s*(?:'([^']*)'|"([^"]*)"|([^, \t\n\r]*))\s*(?:,|$)/g;
-            const rows = [];
-            let row = [];
-            text.replace(re, (m, m1, m2, m3) => {
-                if (m1 !== undefined) row.push(m1);
-                else if (m2 !== undefined) row.push(m2);
-                else row.push(m3);
-                if (m.indexOf(',') === -1) { rows.push(row); row = []; }
-                return '';
-            });
-            return rows;
+    // 📝 複雑なCSV（改行入り）を正しく解析する関数
+    function parseCSV(str) {
+        const arr = [];
+        let quote = false;
+        for (let row = col = c = 0; c < str.length; c++) {
+            let cc = str[c], nc = str[c+1];
+            arr[row] = arr[row] || [];
+            arr[row][col] = arr[row][col] || '';
+            if (cc == '"' && quote && nc == '"') { arr[row][col] += cc; ++c; continue; }
+            if (cc == '"') { quote = !quote; continue; }
+            if (cc == ',' && !quote) { ++col; continue; }
+            if (cc == '\r' && nc == '\n' && !quote) { ++row; col = 0; ++c; continue; }
+            if (cc == '\n' && !quote) { ++row; col = 0; continue; }
+            if (cc == '\r' && !quote) { ++row; col = 0; continue; }
+            arr[row][col] += cc;
         }
+        return arr;
+    }
 
-        // 📖 DETAIL RENDERER
-        function renderDetail(index) {
-            const p = database[index];
-            const output = document.getElementById('detail-output');
-            output.innerHTML = `
-                <div class="post-label">${p.cat}</div>
-                <div style="color:var(--text-sub); font-weight:500;">公開日: ${p.date}</div>
-                <h1 style="font-size:2.8rem; line-height:1.2; margin:20px 0; color:var(--text-main);">${p.title}</h1>
-                <div class="full-text" style="white-space: pre-wrap; word-break: break-all;">${p.desc}</div>
-                <div style="margin-top:60px; padding-top:40px; border-top:2px dashed #e2e8f0;">
-                    <p style="text-align:center; font-weight:700; color:var(--text-sub); margin-bottom:20px;">＼ 究極のマスク造形を公式サイトで拝む ／</p>
-                    <a href="${p.url}" target="_blank" class="cta-button">
-                        <i class="fas fa-external-link-alt"></i> この作品のディテールを確認する
-                    </a>
-                </div>
-            `;
-            navTo('detail');
-        }
+    // 📖 DETAIL RENDERER (詳細画面で全文を表示)
+    window.renderDetail = function(index) {
+        const p = database[index];
+        const output = document.getElementById('detail-output');
+        if (!p || !output) return;
 
-        init();
+        output.innerHTML = `
+            <div class="post-label">${p.cat}</div>
+            <div style="color:var(--text-sub); font-weight:500;">公開日: ${p.date}</div>
+            <h1 style="font-size:2.8rem; line-height:1.2; margin:20px 0; color:var(--text-main);">${p.title}</h1>
+            <div class="full-text" style="white-space: pre-wrap; word-break: break-all; font-size: 1.1rem; line-height: 1.8;">${p.desc}</div>
+            <div style="margin-top:60px; padding-top:40px; border-top:2px dashed #e2e8f0;">
+                <p style="text-align:center; font-weight:700; color:var(--text-sub); margin-bottom:20px;">＼ 究極の作品を公式サイトでチェック ／</p>
+                <a href="${p.url}" target="_blank" class="cta-button">
+                    <i class="fas fa-external-link-alt"></i> この作品のディテールを確認する
+                </a>
+            </div>
+        `;
+        navTo('detail');
+    };
+
+    // 起動！
+    init();
+</script>
